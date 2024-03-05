@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Professional E-Commerce Store</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    fetch('/products')
+        .then(response => response.json())
+        .then(products => {
+            const productsSection = document.getElementById('products');
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.innerHTML = `
+                    <h2>${product.name}</h2>
+                    <p>${product.price}</p>
+                    <button onclick="purchaseProduct(${product.id})">Purchase</button>
+                `;
+                productsSection.appendChild(productDiv);
+            });
+        });
+
+    window.purchaseProduct = (productId) => {
+        fetch('/purchase', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: productId=${productId},
+        })
+        .then(response => response.text())
+        .then(message => alert(message));
+    };
+});
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>Your E-Commerce Store</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/products">Products</a>
+            <a href="/about">About Us</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>Discover Quality Products</h2>
+        <p>Shop with confidence for a wide range of premium products.</p>
+    </section>
+
+    <section id="products">
+        <!-- Product listing dynamically generated using JavaScript (not shown here) -->
+    </section>
+
+    <section class="cta">
+        <h2>Exclusive Offers Just for You</h2>
+        <p>Subscribe to our newsletter and get access to exclusive deals and promotions.</p>
+        <input type="email" placeholder="Enter your email">
+        <button onclick="subscribe()">Subscribe</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Your E-Commerce Store</p>
+    </footer>
+
+    <script src="/scripts.js"></script>
+</body>
+</html>
